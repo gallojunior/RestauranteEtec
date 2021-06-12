@@ -14,14 +14,14 @@ namespace RestauranteEtec.Models
         [StringLength(1000)]
         public string Texto { get; set; }
 
-        [StringLength(30)]
+        [StringLength(60)]
         public string NomePessoa { get; set; }
 
         [StringLength(200)]
         public string FotoPessoa { get; set; }
 
         [StringLength(30)]
-        public string TituloPessoa { get; set; }
+        public string TipoPessoa { get; set; }
 
         [Required]
         public DateTime DataCadastro { get; set; }

@@ -10,8 +10,8 @@ namespace RestauranteEtec.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(30)]
+        [Required(ErrorMessage = "Campo obrigatório")]
+        [StringLength(30, ErrorMessage = "O Nome da Categoria deve possuir no máximo 30 caracteres")]
         public string Nome { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RestauranteEtec.DAL;
 using RestauranteEtec.Models;
 using System;
 using System.Collections.Generic;
@@ -21,16 +22,24 @@ namespace RestauranteEtec.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var funcionarios = new FuncionarioDAL();
+            var chefes = funcionarios.GetAll().Where(f => f.Ativo && f.ExibirHome).OrderBy(f => f.OrdemExibicao).ToList();
+            ViewData["Chefes"] = chefes;
+
             return View();
         }
 
         public IActionResult QuemSomos()
         {
+
             return View();
         }
 
         public IActionResult Chefes()
         {
+            var funcionarios = new FuncionarioDAL();
+            var chefes = funcionarios.GetAll().Where(f => f.Ativo && f.ExibirHome).OrderBy(f => f.OrdemExibicao).ToList();
+            ViewData["Chefes"] = chefes;
             return View();
         }
 

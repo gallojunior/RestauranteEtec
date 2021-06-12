@@ -11,7 +11,6 @@ namespace RestauranteEtec.DAL
 {
     public class CargoDAL : IRepository<Cargo>
     {
-
         string connectionString = @"Server=localhost;port=3306;database=RestauranteEtec;uid=root;pwd=''";
 
         public void Add(Cargo model)
@@ -19,7 +18,7 @@ namespace RestauranteEtec.DAL
             using (MySqlConnection conexao = new MySqlConnection(connectionString))
             {
                 var sql = "insert into Cargo(Nome) values (@Nome)";
-                MySqlCommand comando = new MySqlCommand(sql);
+                MySqlCommand comando = new MySqlCommand(sql, conexao);
                 comando.CommandType = CommandType.Text;
                 comando.Parameters.AddWithValue("@Nome", model.Nome);
 
@@ -34,9 +33,9 @@ namespace RestauranteEtec.DAL
             using (MySqlConnection conexao = new MySqlConnection(connectionString))
             {
                 var sql = "delete from Cargo where Id = @Id";
-                MySqlCommand comando = new MySqlCommand(sql);
+                MySqlCommand comando = new MySqlCommand(sql, conexao);
                 comando.CommandType = CommandType.Text;
-                
+
                 comando.Parameters.AddWithValue("@Id", id);
 
                 conexao.Open();
@@ -52,7 +51,6 @@ namespace RestauranteEtec.DAL
             {
                 MySqlCommand comando = new MySqlCommand("select * from Cargo", conexao);
                 comando.CommandType = CommandType.Text;
-
                 conexao.Open();
                 MySqlDataReader leitor = comando.ExecuteReader();
                 while (leitor.Read())
@@ -76,6 +74,7 @@ namespace RestauranteEtec.DAL
             {
                 MySqlCommand comando = new MySqlCommand("select * from Cargo where Id = @Id", conexao);
                 comando.CommandType = CommandType.Text;
+                comando.Parameters.AddWithValue("@Id", id);
 
                 conexao.Open();
                 MySqlDataReader leitor = comando.ExecuteReader();
@@ -95,11 +94,11 @@ namespace RestauranteEtec.DAL
         public void Update(Cargo model)
         {
             using (MySqlConnection conexao = new MySqlConnection(connectionString))
-            {
+            { 
                 var sql = "update Cargo set" +
                           "  Nome = @Nome" +
-                          "where Id = @Id";
-                MySqlCommand comando = new MySqlCommand(sql);
+                          " where Id = @Id";
+                MySqlCommand comando = new MySqlCommand(sql, conexao);
                 comando.CommandType = CommandType.Text;
 
                 comando.Parameters.AddWithValue("@Id", model.Id);

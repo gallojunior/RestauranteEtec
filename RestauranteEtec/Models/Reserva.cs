@@ -11,7 +11,7 @@ namespace RestauranteEtec.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(60)]
         public string NomePessoa { get; set; }
 
         [Required]
@@ -19,7 +19,7 @@ namespace RestauranteEtec.Models
         public string EmailPessoa { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(20)]
         public string FonePessoa { get; set; }
 
         [Required]
@@ -29,7 +29,8 @@ namespace RestauranteEtec.Models
         public DateTime DataReserva { get; set; }
 
         [Required]
-        [StringLength(100)]
         public byte Convidados { get; set; }
+
+        public byte Status { get; set; }
     }
 }
