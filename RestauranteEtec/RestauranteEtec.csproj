@@ -571,6 +571,9 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\funcionarios\" />
+    <Folder Include="wwwroot\images\blogs\" />
+    <Folder Include="wwwroot\images\relatos\" />
+    <Folder Include="wwwroot\images\produtos\" />
   </ItemGroup>
 
 </Project>

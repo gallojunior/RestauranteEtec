@@ -1,0 +1,69 @@
+﻿@model RestauranteEtec.Models.Blog
+@{
+    ViewData["Title"] = "Blog";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="row mt-3">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">Alterar Blog</div>
+                <hr>
+                <form asp-action="Edit" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="col-md-3 col-sm-12">
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <input type="hidden" asp-for="Imagem" />
+                                    <img src="@(System.IO.File.Exists(ViewData["wwwroot"] + Model.Imagem) ?
+                                             Url.Content(Model.Imagem) : Url.Content("~/images/sem_foto.png"))"
+                                         class="img-fluid" id='PreviewImagem' />
+                                    <label asp-for="Imagem" class="control-label"></label>
+                                    <input type="file" id="NovaImagem" name="NovaImagem" class="form-control-file"
+                                           accept=".jpg,.jpeg,.png,.gif" />
+                                    <span asp-validation-for="Imagem" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-9 col-sm-12">
+                            <div class="form-group">
+                                <label asp-for="Titulo" class="control-label"></label>
+                                <input asp-for="Titulo" class="form-control" />
+                                <span asp-validation-for="Titulo" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Texto" class="control-label"></label>
+                                <textarea asp-for="Texto" class="form-control" rows="5"> </textarea>
+                                <span asp-validation-for="Texto" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DataCadastro" class="control-label"></label>
+                                <input asp-for="DataCadastro" class="form-control" disabled />
+                                <span asp-validation-for="DataCadastro" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Salvar" class="btn btn-success mr-2" />
+                            <a class="btn btn-danger" asp-action="Index">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        window.addEventListener('load', function () {
+            document.querySelector('input[type="file"]').addEventListener('change', function () {
+                if (this.files && this.files[0]) {
+                    var img = document.getElementById('PreviewImagem');
+                    img.src = URL.createObjectURL(this.files[0]);
+                }
+            });
+        });
+    </script>
+}

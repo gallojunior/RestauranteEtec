@@ -17,14 +17,13 @@ namespace RestauranteEtec.DAL
         {
             using (MySqlConnection conexao = new MySqlConnection(connectionString))
             {
-                var sql = "insert into Blog(Titulo, Texto, DataCadastro, Imagem) values (@Titulo, Texto, DataCadastro, Imagem)";
+                var sql = "insert into Blog(Titulo, Texto, DataCadastro, Imagem) values (@Titulo, @Texto, @DataCadastro, @Imagem)";
                 MySqlCommand comando = new MySqlCommand(sql, conexao);
                 comando.CommandType = CommandType.Text;
                 comando.Parameters.AddWithValue("@Titulo", model.Titulo);
                 comando.Parameters.AddWithValue("@Texto", model.Texto);
-                comando.Parameters.AddWithValue("@DataCadastro", DateTime.Now);
+                comando.Parameters.AddWithValue("@DataCadastro", DateTime.Now.ToString("yyyy-MM-dd H:mm"));
                 comando.Parameters.AddWithValue("@Imagem", model.Imagem);
-
                 conexao.Open();
                 comando.ExecuteNonQuery();
                 conexao.Close();
@@ -78,8 +77,9 @@ namespace RestauranteEtec.DAL
             Blog blog = new Blog();
             using (MySqlConnection conexao = new MySqlConnection(connectionString))
             {
-                MySqlCommand comando = new MySqlCommand("select * from Blog", conexao);
+                MySqlCommand comando = new MySqlCommand("select * from Blog where Id = @Id", conexao);
                 comando.CommandType = CommandType.Text;
+                comando.Parameters.AddWithValue("@Id", id);
                 conexao.Open();
                 MySqlDataReader leitor = comando.ExecuteReader();
                 if (!leitor.HasRows)
@@ -107,7 +107,7 @@ namespace RestauranteEtec.DAL
                     " Titulo = @Titulo," +
                     " Texto = @Texto," +
                     " Imagem = @Imagem" +
-                    " where Id = @Id)";
+                    " where Id = @Id";
                 MySqlCommand comando = new MySqlCommand(sql, conexao);
                 comando.CommandType = CommandType.Text;
                 comando.Parameters.AddWithValue("@Id", model.Id);
