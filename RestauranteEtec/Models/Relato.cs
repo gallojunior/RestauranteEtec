@@ -24,6 +24,7 @@ namespace RestauranteEtec.Models
         public string TipoPessoa { get; set; }
 
         [Required]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}")]
         public DateTime DataCadastro { get; set; }
 
         public bool ExibirHome { get; set; }

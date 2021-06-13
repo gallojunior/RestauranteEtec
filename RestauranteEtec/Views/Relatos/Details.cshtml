@@ -1,0 +1,64 @@
+﻿@model RestauranteEtec.Models.Relato
+@{
+    ViewData["Title"] = "Relato";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row mt-3">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">Detalhes do Relato</div>
+                <hr>
+                <div class="row">
+                    <div class="col-3">
+                        <img src="@(System.IO.File.Exists(ViewData["wwwroot"] + Model.FotoPessoa) ?
+                                    Url.Content(Model.FotoPessoa) : Url.Content("~/images/sem_foto.png"))"
+                             class="img-fluid" id='PreviewImagem' />
+                    </div>
+                    <div class="col-9">
+                        <div class="row">
+                            <label class="col-3" asp-for="NomePessoa"></label>
+                            <label class="col-9">@Html.DisplayFor(model => model.NomePessoa)</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3" asp-for="TipoPessoa"></label>
+                            <label class="col-9">@Html.DisplayFor(model => model.TipoPessoa)</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3" asp-for="Texto"></label>
+                            <label class="col-9">@Html.DisplayFor(model => model.Texto)</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3" asp-for="DataCadastro"></label>
+                            <label class="col-9">@Html.DisplayFor(model => model.DataCadastro)</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="icheck-material-white">
+                                    <input type="checkbox" asp-for="ExibirHome" disabled />
+                                    <label asp-for="ExibirHome"></label>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="icheck-material-white">
+                                    <input type="checkbox" asp-for="Ativo" disabled />
+                                    <label asp-for="Ativo"></label>
+                                </div>
+                            </div>
+                            <div class="col-6 pt-1">
+                                <label asp-for="OrdemExibicao"></label>
+                                <label>@Html.DisplayFor(model => model.OrdemExibicao)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <a class="btn btn-warning mr-3" asp-action="Edit" asp-route-id="@Model.Id">Alterar</a>
+                    <a class="btn btn-light" asp-action="Index">Voltar a Listagem</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
