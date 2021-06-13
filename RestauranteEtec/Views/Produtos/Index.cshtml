@@ -1,0 +1,81 @@
+﻿@model IEnumerable<RestauranteEtec.Models.Produto>
+@{
+    ViewData["Title"] = "Produtos";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row mt-3">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">Lista de Produtos</div>
+                <hr>
+                <p class="mb-3">
+                    <a class="btn btn-light" asp-action="Create">Adicionar Novo</a>
+                </p>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Nome)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Categoria)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Preco)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ExibirHome)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Ativo)
+                            </th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nome)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Preco)
+                                </td>
+                                <td>
+                                    <div class="icheck-material-white">
+                                        <input type="checkbox" asp-for="@item.ExibirHome" disabled />
+                                        <label asp-for="@item.ExibirHome">Exibir</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icheck-material-white">
+                                        <input type="checkbox" asp-for="@item.Ativo" disabled />
+                                        <label asp-for="@item.Ativo">Ativo</label>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <a asp-action="Edit" class="mr-3 text-warning" asp-route-id="@item.Id">
+                                        <i class="zmdi zmdi-edit" title="Alterar"></i>
+                                    </a>
+                                    <a asp-action="Details" class="mr-3 text-white" asp-route-id="@item.Id">
+                                        <i class="zmdi zmdi-zoom-in" title="Detalhes"></i>
+                                    </a>
+                                    <a asp-action="Delete" class="text-danger" asp-route-id="@item.Id">
+                                        <i class="zmdi zmdi-delete" title="Excluir"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

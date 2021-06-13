@@ -12,142 +12,143 @@ using System.Threading.Tasks;
 
 namespace RestauranteEtec.Controllers
 {
-    public class FuncionariosController : Controller
+    public class ProdutosController : Controller
     {
-        private readonly CargoDAL cargoDAL = new CargoDAL();
-        private readonly FuncionarioDAL funcionarioDAL = new FuncionarioDAL();
+
+        private readonly CategoriaDAL categoriaDAL = new CategoriaDAL();
+        private readonly ProdutoDAL produtoDAL = new ProdutoDAL();
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public FuncionariosController(IWebHostEnvironment webHostEnvironment)
+        public ProdutosController(IWebHostEnvironment webHostEnvironment)
         {
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        // GET: FuncionariosController
+        // GET: ProdutoController
         public ActionResult Index()
         {
-            var funcionarios = funcionarioDAL.GetAll();
-            return View(funcionarios);
+            var produtos = produtoDAL.GetAll();
+            return View(produtos);
         }
 
-        // GET: FuncionariosController/Details/5
+        // GET: ProdutoController/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
                 return NotFound();
-            var funcionario = funcionarioDAL.GetById(id);
-            if (funcionario == null)
+            var produto = produtoDAL.GetById(id);
+            if (produto == null)
                 return NotFound();
             ViewData["wwwroot"] = webHostEnvironment.WebRootPath;
-            return View(funcionario);
+            return View(produto);
         }
 
-        // GET: FuncionariosController/Create
+        // GET: ProdutoController/Create
         public ActionResult Create()
         {
-            ViewData["Cargos"] = new SelectList(cargoDAL.GetAll(), "Id", "Nome");
-            var funcionario = new Funcionario();
-            funcionario.Ativo = true;
-            funcionario.ExibirHome = false;
-            return View(funcionario);
+            ViewData["Categorias"] = new SelectList(categoriaDAL.GetAll(), "Id", "Nome");
+            var produto = new Produto();
+            produto.Ativo = true;
+            produto.ExibirHome = false;
+            return View(produto);
         }
 
-        // POST: FuncionariosController/Create
+        // POST: ProdutoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind] Funcionario funcionario, IFormFile Foto)
+        public async Task<ActionResult> Create([Bind] Produto produto, IFormFile Foto)
         {
-            ViewData["Cargos"] = new SelectList(cargoDAL.GetAll(), "Id", "Nome");
+            ViewData["Categorias"] = new SelectList(categoriaDAL.GetAll(), "Id", "Nome");
             if (!ModelState.IsValid)
-                return View(funcionario);
+                return View(produto);
             try
             {
                 if (Foto != null)
                 {
-                    string pasta = Path.Combine(webHostEnvironment.WebRootPath, "images\\funcionarios");
+                    string pasta = Path.Combine(webHostEnvironment.WebRootPath, "images\\produtos");
                     var nomeArquivo = Guid.NewGuid().ToString() + "_" + Foto.FileName;
                     string caminhoArquivo = Path.Combine(pasta, nomeArquivo);
                     using (var stream = new FileStream(caminhoArquivo, FileMode.Create))
                     {
                         await Foto.CopyToAsync(stream);
                     };
-                    funcionario.Foto = "/images/funcionarios/" + nomeArquivo;
+                    produto.Foto = "/images/produtos/" + nomeArquivo;
                 }
-                funcionarioDAL.Add(funcionario);
+                produtoDAL.Add(produto);
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View(funcionario);
+                return View(produto);
             }
         }
 
-        // GET: FuncionariosController/Edit/5
+        // GET: ProdutoController/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
                 return NotFound();
-            var funcionario = funcionarioDAL.GetById(id);
-            if (funcionario == null)
+            var produto = produtoDAL.GetById(id);
+            if (produto == null)
                 return NotFound();
             ViewData["wwwroot"] = webHostEnvironment.WebRootPath;
-            ViewData["Cargos"] = new SelectList(cargoDAL.GetAll(), "Id", "Nome");
-            return View(funcionario);
+            ViewData["Categorias"] = new SelectList(categoriaDAL.GetAll(), "Id", "Nome");
+            return View(produto);
         }
 
-        // POST: FuncionariosController/Edit/5
+        // POST: ProdutoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, [Bind] Funcionario funcionario, IFormFile NovaFoto)
+        public async Task<ActionResult> Edit(int id, [Bind] Produto produto, IFormFile NovaFoto)
         {
-            if (id != funcionario.Id)
+            if (id != produto.Id)
                 return NotFound();
             ViewData["wwwroot"] = webHostEnvironment.WebRootPath;
-            ViewData["Cargos"] = new SelectList(cargoDAL.GetAll(), "Id", "Nome");
+            ViewData["Categorias"] = new SelectList(categoriaDAL.GetAll(), "Id", "Nome");
             if (!ModelState.IsValid)
-                return View(funcionario);
+                return View(produto);
             try
             {
                 if (NovaFoto != null)
                 {
-                    string pasta = Path.Combine(webHostEnvironment.WebRootPath, "images\\funcionarios");
+                    string pasta = Path.Combine(webHostEnvironment.WebRootPath, "images\\produtos");
                     var nomeArquivo = Guid.NewGuid().ToString() + "_" + NovaFoto.FileName;
                     string caminhoArquivo = Path.Combine(pasta, nomeArquivo);
                     using (var stream = new FileStream(caminhoArquivo, FileMode.Create))
                     {
                         await NovaFoto.CopyToAsync(stream);
                     };
-                    funcionario.Foto = "/images/funcionarios/" + nomeArquivo;
+                    produto.Foto = "/images/produtos/" + nomeArquivo;
                 }
-                funcionarioDAL.Update(funcionario);
+                produtoDAL.Update(produto);
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View(funcionario);
+                return View(produto);
             }
         }
 
-        // GET: FuncionariosController/Delete/5
+        // GET: ProdutoController/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
                 return NotFound();
-            var funcionario = funcionarioDAL.GetById(id);
-            if (funcionario == null)
+            var produto = produtoDAL.GetById(id);
+            if (produto == null)
                 return NotFound();
             ViewData["wwwroot"] = webHostEnvironment.WebRootPath;
-            return View(funcionario);
+            return View(produto);
         }
 
-        // POST: FuncionariosController/Delete/5
+        // POST: ProdutoController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)
         {
             if (id == null)
                 return NotFound();
-            funcionarioDAL.Delete(id);
+            produtoDAL.Delete(id);
             return RedirectToAction("Index");
         }
     }

@@ -7,27 +7,27 @@ using System.Threading.Tasks;
 
 namespace RestauranteEtec.Controllers
 {
-    public class ProdutoController : Controller
+    public class RelatosController : Controller
     {
-        // GET: ProdutoController
+        // GET: RelatoController
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: ProdutoController/Details/5
+        // GET: RelatoController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: ProdutoController/Create
+        // GET: RelatoController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ProdutoController/Create
+        // POST: RelatoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -42,13 +42,13 @@ namespace RestauranteEtec.Controllers
             }
         }
 
-        // GET: ProdutoController/Edit/5
+        // GET: RelatoController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: ProdutoController/Edit/5
+        // POST: RelatoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -63,13 +63,13 @@ namespace RestauranteEtec.Controllers
             }
         }
 
-        // GET: ProdutoController/Delete/5
+        // GET: RelatoController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: ProdutoController/Delete/5
+        // POST: RelatoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

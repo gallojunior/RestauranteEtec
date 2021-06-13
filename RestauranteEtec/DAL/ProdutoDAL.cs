@@ -24,14 +24,21 @@ namespace RestauranteEtec.DAL
                 comando.Parameters.AddWithValue("@Nome", model.Nome);
                 comando.Parameters.AddWithValue("@Descricao", model.Descricao);
                 comando.Parameters.AddWithValue("@Preco", model.Preco);
-                comando.Parameters.AddWithValue("@CategoriId", model.CategoriaId);
+                comando.Parameters.AddWithValue("@CategoriaId", model.CategoriaId);
                 comando.Parameters.AddWithValue("@Foto", model.Foto);
                 comando.Parameters.AddWithValue("@ExibirHome", model.ExibirHome);
                 comando.Parameters.AddWithValue("@Ativo", model.Ativo);
 
-                conexao.Open();
-                comando.ExecuteNonQuery();
-                conexao.Close();
+                try
+                {
+                    conexao.Open();
+                    comando.ExecuteNonQuery();
+                    conexao.Close();
+                }
+                catch (Exception e)
+                {
+                    Console.Write(e);
+                }
             }
         }
 
@@ -90,12 +97,14 @@ namespace RestauranteEtec.DAL
             CategoriaDAL categoria = new CategoriaDAL();
             using (MySqlConnection conexao = new MySqlConnection(connectionString))
             {
-                var sql = "select * from Produto";
+                var sql = "select * from Produto where Id = @Id";
                 MySqlCommand comando = new MySqlCommand(sql, conexao);
                 comando.CommandType = CommandType.Text;
+                comando.Parameters.AddWithValue("@Id", id);
 
                 conexao.Open();
                 MySqlDataReader leitor = comando.ExecuteReader();
+                leitor.Read();
                 if (!leitor.HasRows)
                 {
                     conexao.Close();
@@ -135,7 +144,7 @@ namespace RestauranteEtec.DAL
                 comando.Parameters.AddWithValue("@Nome", model.Nome);
                 comando.Parameters.AddWithValue("@Descricao", model.Descricao);
                 comando.Parameters.AddWithValue("@Preco", model.Preco);
-                comando.Parameters.AddWithValue("@CategoriId", model.CategoriaId);
+                comando.Parameters.AddWithValue("@CategoriaId", model.CategoriaId);
                 comando.Parameters.AddWithValue("@Foto", model.Foto);
                 comando.Parameters.AddWithValue("@ExibirHome", model.ExibirHome);
                 comando.Parameters.AddWithValue("@Ativo", model.Ativo);

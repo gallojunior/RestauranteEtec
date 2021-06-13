@@ -1,0 +1,66 @@
+﻿@model RestauranteEtec.Models.Produto
+
+@{
+    ViewData["Title"] = "Produto";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row mt-3">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">Excluir Produto</div>
+                <hr>
+                <div class="row">
+                    <div class="col-3">
+                        <img src="@(System.IO.File.Exists(ViewData["wwwroot"] + Model.Foto) ?
+                                    Url.Content(Model.Foto) : Url.Content("~/images/sem_foto.png"))"
+                             class="img-fluid" id='PreviewImagem' />
+                    </div>
+                    <div class="col-9">
+                        <div class="row">
+                            <label class="col-3" asp-for="Nome"></label>
+                            <label class="col-9">@Html.DisplayFor(model => model.Nome)</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3" asp-for="Descricao"></label>
+                            <label class="col-9">@Html.DisplayFor(model => model.Descricao)</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3" asp-for="CategoriaId"></label>
+                            <label class="col-9">@Html.DisplayFor(model => model.Categoria.Nome)</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3" asp-for="Preco"></label>
+                            <label class="col-9">@Html.DisplayFor(model => model.Preco)</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="icheck-material-white">
+                                    <input type="checkbox" asp-for="ExibirHome" disabled />
+                                    <label asp-for="ExibirHome"></label>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="icheck-material-white">
+                                    <input type="checkbox" asp-for="Ativo" disabled />
+                                    <label asp-for="Ativo"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form asp-action="Delete" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <h5 class="my-3">Confirma a Exclusão deste Produto?</h5>
+                    <div class="form-group">
+                        <input type="submit" value="Excluir" class="btn btn-danger mr-2" />
+                        <a class="btn btn-light" asp-action="Index">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

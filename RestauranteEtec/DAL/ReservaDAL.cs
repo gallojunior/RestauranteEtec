@@ -92,6 +92,7 @@ namespace RestauranteEtec.DAL
 
                 conexao.Open();
                 MySqlDataReader leitor = comando.ExecuteReader();
+                leitor.Read();
                 if (!leitor.HasRows)
                 {
                     conexao.Close();
